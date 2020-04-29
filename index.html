@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Coding Quiz</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1" id="highscores">Your Highscores</span>
+                <div>
+                    <span class="navbar-text" id="timer">
+                    Time: 0
+                    </span>
+                </div> 
+          </nav>
+    </header>
+
+    <!-- OPENING PAGE -->
+    <section id="opening-page">
+        <div class="container text-center my-4">
+            <h1>The Coding Quiz Challenge</h1>
+            <br>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta quae, aut, harum porro labore neque veritatis dicta deleniti delectus vel laboriosam aspernatur esse id asperiores? Enim, quos. Architecto, illo provident.</p>
+            <br>
+            <button id="start">Start Quiz!</button>
+        </div>
+    </section>
+
+    <!-- QUESTION PAGES -->
+    <section class="hide" id="questions-page">
+        <div class="container text-center my-4">
+            <h1 id="question">Enter question here</h1>
+                <div class="choices" id="choices">Enter choices here</div>
+                <div class="hide" id="feedback">Feedback</div>
+        </div>
+    </section>
+
+    <!-- SUBMIT HIGHSCORES PAGE -->
+    <section class="hide" id="submit-highscores-page">
+        <div class="container text-center my-4">
+            <h1>All done!</h1>
+            <p>Your final score: <span id="finalscore">0</span></p>
+            <form class="form-inline justify-content-center">
+                <div class="form-group mb-2">
+                  <label>Enter initials</label>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                  <input class="form-control" id="inputInitials" placeholder="ABC">
+                </div>
+                <div>
+                <button class="mb-2" id="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- VIEW HIGHSCORES PAGE -->
+    <section class="hide" id="view-highscores-page">
+        <div class="container text-center my-4">
+            <h1>Highscores</h1>
+                <ul>
+                    <li>initials will be here</li>
+                </ul>
+            <button class="mx-2" id="go-back">Go back</button>
+            <button class="mx-2" id="clear-highscores">Clear highscores</button>
+        </div>
+    </section>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="assets/questions.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>
