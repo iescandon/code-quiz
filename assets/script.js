@@ -11,16 +11,28 @@ var choicesEl = document.querySelector("#choices");
 var continueBtn = document.querySelector("#continue");
 var finalscoreEl = document.querySelector("#finalscore");
 var submitBtn = document.querySelector("#submit");
+var initialsEl = document.querySelector("#inputInitials");
 var goBackBtn = document.querySelector("#go-back");
 var clearBtn = document.querySelector("#clear-highscores");
 var currentQuestionIndex = 0;
 var score = 0;
-var time = questions.length * 10;
+var time = (questions.length * 10) + 1;
 
 //logic
 function startTimer() {
-    timerEl.textContent = "Time: " + time;
-    //add timer here
+    var timerInterval = setInterval(function() {
+        time--;
+        timerEl.textContent = "Time: " + time;
+        if(time === 0) {
+          clearInterval(timerInterval);
+          sendMessage();
+        }
+      }, 1000);
+}
+
+function sendMessage () {
+    alert("TIME'S UP!");
+    submitHighscores();
 }
 
 function resetApp () {
