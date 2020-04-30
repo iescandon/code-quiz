@@ -53,13 +53,13 @@ function analyzeAnswer () {
         score++;
         feedbackEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        feedbackEl.textContent = "Correct";
+        feedbackEl.textContent = "Correct!";
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
         feedbackEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        feedbackEl.textContent = "Incorrect";
+        feedbackEl.textContent = "Incorrect!";
     }
     currentQuestionIndex++;
     continueBtn.addEventListener("click", getQuestions);
@@ -77,9 +77,9 @@ function getQuestions () {
         currentQuestion.choices.forEach(function (choice) {
         var choiceBtn = document.createElement("button");
         choiceBtn.setAttribute("class", "choice");
-        choiceBtn.setAttribute("value", choice)
+        choiceBtn.setAttribute("value", choice);
         choiceBtn.textContent = choice;
-        choicesEl.appendChild(choiceBtn);
+        choicesEl.append(choiceBtn);
         choiceBtn.addEventListener("click", analyzeAnswer);
     })
     }
