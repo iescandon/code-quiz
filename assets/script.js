@@ -1,6 +1,7 @@
 //variable declarations and values
 let timerEl = document.querySelector("#timer");
 var startBtn = document.querySelector("#start");
+var highscoresBtn = document.querySelector("#highscores");
 var openingPg = document.querySelector("#opening-page");
 var questionsPg = document.querySelector("#questions-page");
 var feedbackEl = document.querySelector("#feedback");
@@ -11,16 +12,18 @@ var choicesEl = document.querySelector("#choices");
 var continueBtn = document.querySelector("#continue");
 var finalscoreEl = document.querySelector("#finalscore");
 var submitBtn = document.querySelector("#submit");
-var initialsEl = document.querySelector("#inputInitials");
+var userInitials = document.querySelector("#inputInitials");
+var initialsEl = document.querySelector("#initials");
 var goBackBtn = document.querySelector("#go-back");
 var clearBtn = document.querySelector("#clear-highscores");
 var currentQuestionIndex = 0;
 var score = 0;
 var time = (questions.length * 10) + 1;
+var timerInterval = 0;
 
 //logic
 function startTimer() {
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         time--;
         timerEl.textContent = "Time: " + time;
         if(time === 0) {
@@ -35,29 +38,52 @@ function sendMessage () {
     submitHighscores();
 }
 
+function clear () {
+    window.localStorage.clear();
+    initialsEl.innerHTML = "";
+}
+
 function resetApp () {
     viewHighscoresPg.classList.add("hide");
     openingPg.classList.remove("hide");
     feedbackEl.classList.add("hide");
     currentQuestionIndex = 0;
     score = 0;
-    time = questions.length * 10;
-    timerEl.textContent = "Time: 0";
 }
 
+//prevent default doesnt work when submitBtn function isnt working.
 function viewHighscores (event) {
     event.preventDefault();
+    openingPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
     viewHighscoresPg.classList.remove("hide");
-    goBackBtn.addEventListener("click", resetApp)
-
+    var initials = localStorage.getItem("initials", initials);
+    var newDiv = document.createElement("div");
+    newDiv.textContent = initials;
+    initialsEl.prepend(newDiv);
+    goBackBtn.addEventListener("click", resetApp);
+    clearBtn.addEventListener("click", clear);
 }
 
 function submitHighscores () {
     questionsPg.classList.add("hide");
     submitHighscoresPg.classList.remove("hide");
+    clearInterval(timerInterval);
+    time = questions.length * 10 + 1;
+    timerEl.textContent = "Time: 0";
     finalscoreEl.textContent = (score * 10) + "%";
-    submitBtn.addEventListener("click", viewHighscores);
+    // submitBtn.addEventListener("click", viewHighscores);
+    submitBtn.addEventListener("click", function (event) {
+        var initials = userInitials.value;
+        if (initials === "") {
+            alert("Initials cannot be blank");
+            event.preventDefault();
+        } else {
+        localStorage.setItem("initials", initials);
+        console.log("success");
+        viewHighscores();
+        }
+    })
 }
 
 function analyzeAnswer () {
@@ -107,3 +133,4 @@ function startQuestions () {
 
 //launch functions and event listeners
 startBtn.addEventListener("click", startQuestions);
+highscoresBtn.addEventListener("click", viewHighscores);
