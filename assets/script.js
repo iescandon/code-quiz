@@ -20,6 +20,7 @@ var currentQuestionIndex = 0;
 var score = 0;
 var time = (questions.length * 10) + 1;
 var timerInterval = 0;
+var highScoresArray = [];
 
 //logic
 function startTimer() {
@@ -49,18 +50,20 @@ function resetApp () {
     feedbackEl.classList.add("hide");
     currentQuestionIndex = 0;
     score = 0;
+    time = questions.length * 10 + 1;
 }
 
-//prevent default doesnt work when submitBtn function isnt working.
-function viewHighscores (event) {
-    event.preventDefault();
+function viewHighscores () {
     openingPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
     viewHighscoresPg.classList.remove("hide");
-    var initials = localStorage.getItem("initials", initials);
-    var newDiv = document.createElement("div");
-    newDiv.textContent = initials;
-    initialsEl.prepend(newDiv);
+    initialsEl.innerHTML = "";
+    for (var i = 0; i < highScoresArray.length; i++) {
+        var initialInput = highScoresArray[i];
+        var li = document.createElement("li");
+        li.textContent = initialInput;
+        initialsEl.prepend(li);
+    }
     goBackBtn.addEventListener("click", resetApp);
     clearBtn.addEventListener("click", clear);
 }
@@ -69,20 +72,18 @@ function submitHighscores () {
     questionsPg.classList.add("hide");
     submitHighscoresPg.classList.remove("hide");
     clearInterval(timerInterval);
-    time = questions.length * 10 + 1;
     timerEl.textContent = "Time: 0";
     finalscoreEl.textContent = (score * 10) + "%";
-    // submitBtn.addEventListener("click", viewHighscores);
     submitBtn.addEventListener("click", function (event) {
-        var initials = userInitials.value;
+        event.preventDefault();
+        var initials = userInitials.value.trim();
+        localStorage.setItem("initials", initials);
+        highScoresArray.push(initials);
         if (initials === "") {
             alert("Initials cannot be blank");
-            event.preventDefault();
-        } else {
-        localStorage.setItem("initials", initials);
-        console.log("success");
-        viewHighscores();
+            return;
         }
+        viewHighscores();
     })
 }
 
@@ -113,13 +114,13 @@ function getQuestions () {
         questionEl.textContent = currentQuestion.title;
         choicesEl.innerHTML = "";
         currentQuestion.choices.forEach(function (choice) {
-        var choiceBtn = document.createElement("button");
-        choiceBtn.setAttribute("class", "choice");
-        choiceBtn.setAttribute("value", choice);
-        choiceBtn.textContent = choice;
-        choicesEl.append(choiceBtn);
-        choiceBtn.addEventListener("click", analyzeAnswer);
-    })
+            var choiceBtn = document.createElement("button");
+            choiceBtn.setAttribute("class", "choice");
+            choiceBtn.setAttribute("value", choice);
+            choiceBtn.textContent = choice;
+            choicesEl.append(choiceBtn);
+            choiceBtn.addEventListener("click", analyzeAnswer);
+        })
     }
 }
 
