@@ -31,3 +31,7 @@ ul {
 .hide {
     display: none;
 }
+
+.disabled {
+    /* change color to gray */
+}

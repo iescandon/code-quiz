@@ -21,6 +21,7 @@ var score = 0;
 var time = (questions.length * 10) + 1;
 var timerInterval = 0;
 var highScoresArray = [];
+// var choiceBtn;
 
 //logic
 function startTimer() {
@@ -53,7 +54,45 @@ function resetApp () {
     time = questions.length * 10 + 1;
 }
 
+/*function allStorage() {
+
+    var archive = {}, // Notice change here
+        keys = Object.keys(localStorage),
+        i = keys.length;
+
+    while ( i-- ) {
+        archive[ keys[i] ] = localStorage.getItem( keys[i] );
+    }
+
+    return archive;
+}*/
+
+// function allStorage() {
+
+//     var archive = [],
+//         keys = Object.keys(localStorage),
+//         i = 0, key;
+
+//     for (; key = keys[i]; i++) {
+//         archive.push( key + '=' + localStorage.getItem(key));
+//     }
+
+//     return archive;
+// }
+
 function viewHighscores () {
+    // var score = allStorage();
+    // console.log(score);
+    // //{IE: "0", ip: "1"}
+    // var tE = document.querySelector(".theseInitials")
+    // for (let i = 0; i < score.length; i++) {
+    //      console.log(score[i]);
+    //      var newLi = document.createElement('p')
+    //      newLi.innerHTML = score[i]
+    //      tE.append(newLi)
+    //     //loop through object and append initials and scores to the pages
+        
+    // }
     openingPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
     viewHighscoresPg.classList.remove("hide");
@@ -72,12 +111,14 @@ function submitHighscores () {
     questionsPg.classList.add("hide");
     submitHighscoresPg.classList.remove("hide");
     clearInterval(timerInterval);
+    userInitials.value = "";
     timerEl.textContent = "Time: 0";
-    finalscoreEl.textContent = (score * 10) + "%";
+    scorePercentage = (score * 10) + "%";
+    finalscoreEl.textContent = scorePercentage
     submitBtn.addEventListener("click", function (event) {
         event.preventDefault();
         var initials = userInitials.value.trim();
-        localStorage.setItem("initials", initials);
+        localStorage.setItem(initials, scorePercentage);
         highScoresArray.push(initials);
         if (initials === "") {
             alert("Initials cannot be blank");
@@ -88,19 +129,31 @@ function submitHighscores () {
 }
 
 function analyzeAnswer () {
+    var choiceBtns = document.querySelectorAll(".choice");
+    for (var i = 0; i < choiceBtns.length; i++) {
+        choiceBtns[i].disabled = true;
+        choiceBtns[i].classList.add("disabled");
+    }
     if (this.value === questions[currentQuestionIndex].answer) {
         score++;
+        feedbackEl.textContent = "Correct!";
         feedbackEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        feedbackEl.textContent = "Correct!";
+        setTimeout(function() {
+            feedbackEl.classList.add('hide')
+        },1000)
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
+        feedbackEl.textContent = "Incorrect!";
         feedbackEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        feedbackEl.textContent = "Incorrect!";
+        setTimeout(function() {
+            feedbackEl.classList.add('hide')
+        },1000)
     }
     currentQuestionIndex++;
+    // getQuestions();
     continueBtn.addEventListener("click", getQuestions);
 }
 
