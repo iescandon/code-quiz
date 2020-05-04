@@ -22,7 +22,6 @@ var score = 0;
 var time = (questions.length * 10) + 1;
 var timerInterval = 0;
 var highScoresArray = [];
-// var choiceBtn;
 
 //logic
 function startTimer() {
@@ -48,37 +47,31 @@ function clear () {
 
 function resetApp () {
     // location.reload();
+    alert("Reset");
     viewHighscoresPg.classList.add("hide");
     openingPg.classList.remove("hide");
-    feedbackEl.classList.add("hide");
     currentQuestionIndex = 0;
     score = 0;
-    time = questions.length * 10 + 1;
+    time = (questions.length * 10) + 1;
 }
 
 /*function allStorage() {
-
     var archive = {}, // Notice change here
         keys = Object.keys(localStorage),
         i = keys.length;
-
     while ( i-- ) {
         archive[ keys[i] ] = localStorage.getItem( keys[i] );
     }
-
     return archive;
 }*/
 
 // function allStorage() {
-
 //     var archive = [],
 //         keys = Object.keys(localStorage),
 //         i = 0, key;
-
 //     for (; key = keys[i]; i++) {
 //         archive.push( key + '=' + localStorage.getItem(key));
 //     }
-
 //     return archive;
 // }
 
@@ -93,7 +86,6 @@ function viewHighscores () {
     //      newLi.innerHTML = score[i]
     //      tE.append(newLi)
     //     //loop through object and append initials and scores to the pages
-        
     // }
     openingPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
@@ -151,7 +143,7 @@ function analyzeAnswer () {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
         var choice = this;
-        choice.style.backgroundColor = "red";
+        choice.style.backgroundColor = "#ff1a1a";
         imgEl.setAttribute('src', 'assets/images/incorrect.png');
         imgEl.setAttribute('style', 'width:200px;');
         imgEl.classList.remove("hide");
@@ -190,7 +182,6 @@ function startQuestions () {
     questionsPg.classList.remove("hide");
     getQuestions();
 }
-
 
 //launch functions and event listeners
 startBtn.addEventListener("click", startQuestions);
