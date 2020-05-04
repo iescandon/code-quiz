@@ -53,38 +53,7 @@ function resetApp () {
     time = (questions.length * 10) + 1;
 }
 
-/*function allStorage() {
-    var archive = {}, // Notice change here
-        keys = Object.keys(localStorage),
-        i = keys.length;
-    while ( i-- ) {
-        archive[ keys[i] ] = localStorage.getItem( keys[i] );
-    }
-    return archive;
-}*/
-
-// function allStorage() {
-//     var archive = [],
-//         keys = Object.keys(localStorage),
-//         i = 0, key;
-//     for (; key = keys[i]; i++) {
-//         archive.push( key + '=' + localStorage.getItem(key));
-//     }
-//     return archive;
-// }
-
 function viewHighscores () {
-    // var score = allStorage();
-    // console.log(score);
-    // //{IE: "0", ip: "1"}
-    // var tE = document.querySelector(".theseInitials")
-    // for (let i = 0; i < score.length; i++) {
-    //      console.log(score[i]);
-    //      var newLi = document.createElement('p')
-    //      newLi.innerHTML = score[i]
-    //      tE.append(newLi)
-    //     //loop through object and append initials and scores to the pages
-    // }
     openingPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
     viewHighscoresPg.classList.remove("hide");
@@ -93,30 +62,43 @@ function viewHighscores () {
         var initialInput = highScoresArray[i];
         var li = document.createElement("li");
         li.textContent = initialInput;
+        li.setAttribute("data-index", i);
         initialsEl.prepend(li);
     }
     goBackBtn.addEventListener("click", resetApp);
     clearBtn.addEventListener("click", clear);
 }
 
+function init () {
+    var storedScores = JSON.parse(localStorage.getItem("initials"));
+    if (storedScores !== null) {
+        highScoresArray = storedScores
+    }
+    viewHighscores();
+}
+
+function storeHighscores () {
+    localStorage.setItem("initials", JSON.stringify(highScoresArray));
+    init();
+}
+
 function submitHighscores () {
     questionsPg.classList.add("hide");
     submitHighscoresPg.classList.remove("hide");
     clearInterval(timerInterval);
-    userInitials.value = "";
     timerEl.textContent = "Time: 0";
-    scorePercentage = (score * 10) + "%";
-    finalscoreEl.textContent = scorePercentage
+    score = (score * 10) + "%";
+    finalscoreEl.textContent = score;
     submitBtn.addEventListener("click", function (event) {
         event.preventDefault();
-        var initials = userInitials.value.trim();
-        localStorage.setItem(initials, scorePercentage);
-        highScoresArray.push(initials);
         if (initials === "") {
             alert("Initials cannot be blank");
             return;
         }
-        viewHighscores();
+        var initials = userInitials.value.trim();
+        highScoresArray.push(initials);
+        userInitials.value = "";
+        storeHighscores();
     })
 }
 
@@ -142,6 +124,9 @@ function analyzeAnswer () {
         timerEl.textContent = "Time: " + time;
         var choice = this;
         choice.style.backgroundColor = "#ff1a1a";
+        // var correctAnswer = questions[currentQuestionIndex].answer;
+        // console.log(correctAnswer);
+        // correctAnswer.style.backgroundColor = "#3bb300";
         imgEl.setAttribute('src', 'assets/images/incorrect.png');
         imgEl.setAttribute('style', 'width:200px;');
         imgEl.classList.remove("hide");
@@ -175,7 +160,7 @@ function getQuestions () {
 }
 
 function startQuestions () {
-    startTimer()
+    startTimer();
     openingPg.classList.add("hide");
     questionsPg.classList.remove("hide");
     getQuestions();
