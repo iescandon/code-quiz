@@ -1,5 +1,5 @@
 body {
-    background-image: url(./laptop.jpg);
+    background-image: url(./images/laptop.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Quicksand', sans-serif;
@@ -35,6 +35,11 @@ h1 {
 .btn-group button:hover {
     background-color: lightblue;
 }
+
+.clicked {
+    background-color: lightblue;
+}
+
 ul {
     list-style-type: none;
     padding: 0;

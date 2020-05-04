@@ -131,6 +131,8 @@ function submitHighscores () {
 }
 
 function analyzeAnswer () {
+    var choice = this;
+    choice.setAttribute("style", "background-color: lightblue");
     var choiceBtns = document.querySelectorAll(".choice");
     for (var i = 0; i < choiceBtns.length; i++) {
         choiceBtns[i].disabled = true;
@@ -138,30 +140,25 @@ function analyzeAnswer () {
     }
     if (this.value === questions[currentQuestionIndex].answer) {
         score++;
-        // feedbackEl.textContent = "Correct!";
-        imgEl.setAttribute('src', 'assets/correct.png');
+        imgEl.setAttribute('src', 'assets/images/correct.png');
         imgEl.setAttribute('style', 'width:200px');
-        // feedbackEl.classList.remove("hide");
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        setTimeout(function() {
-            // feedbackEl.classList.add("hide");
-        },1000)
+        // setTimeout(function() {
+        //     feedbackEl.classList.add("hide");
+        // },1000)
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
-        // feedbackEl.textContent = "Incorrect!";
-        imgEl.setAttribute('src', 'assets/incorrect.png');
+        imgEl.setAttribute('src', 'assets/images/incorrect.png');
         imgEl.setAttribute('style', 'width:200px;');
-        // feedbackEl.classList.remove("hide");
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        setTimeout(function() {
-            // feedbackEl.classList.add("hide");
-        },1000)
+        // setTimeout(function() {
+        //     feedbackEl.classList.add("hide");
+        // },1000)
     }
     currentQuestionIndex++;
-    // getQuestions();
     continueBtn.addEventListener("click", getQuestions);
 }
 
