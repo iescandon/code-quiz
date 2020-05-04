@@ -40,3 +40,13 @@ You are required to submit the following for review:
 
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+
+
+
+Photo by Markus Spiske on Unsplash
+
+coding corona
+Photo by Nahel Abdul Hadi on Unsplash
+
+macarons
+Photo by Keila Hötzel on Unsplash

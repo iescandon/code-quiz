@@ -4,6 +4,7 @@ var startBtn = document.querySelector("#start");
 var highscoresBtn = document.querySelector("#highscores");
 var openingPg = document.querySelector("#opening-page");
 var questionsPg = document.querySelector("#questions-page");
+var imgEl = document.querySelector("#img");
 var feedbackEl = document.querySelector("#feedback");
 var submitHighscoresPg = document.querySelector("#submit-highscores-page");
 var viewHighscoresPg = document.querySelector("#view-highscores-page");
@@ -46,6 +47,7 @@ function clear () {
 }
 
 function resetApp () {
+    // location.reload();
     viewHighscoresPg.classList.add("hide");
     openingPg.classList.remove("hide");
     feedbackEl.classList.add("hide");
@@ -136,20 +138,26 @@ function analyzeAnswer () {
     }
     if (this.value === questions[currentQuestionIndex].answer) {
         score++;
-        feedbackEl.textContent = "Correct!";
-        feedbackEl.classList.remove("hide");
+        // feedbackEl.textContent = "Correct!";
+        imgEl.setAttribute('src', 'assets/correct.png');
+        imgEl.setAttribute('style', 'width:200px');
+        // feedbackEl.classList.remove("hide");
+        imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
         setTimeout(function() {
-            feedbackEl.classList.add('hide')
+            // feedbackEl.classList.add("hide");
         },1000)
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
-        feedbackEl.textContent = "Incorrect!";
-        feedbackEl.classList.remove("hide");
+        // feedbackEl.textContent = "Incorrect!";
+        imgEl.setAttribute('src', 'assets/incorrect.png');
+        imgEl.setAttribute('style', 'width:200px;');
+        // feedbackEl.classList.remove("hide");
+        imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
         setTimeout(function() {
-            feedbackEl.classList.add('hide')
+            // feedbackEl.classList.add("hide");
         },1000)
     }
     currentQuestionIndex++;
@@ -158,7 +166,8 @@ function analyzeAnswer () {
 }
 
 function getQuestions () {
-    feedbackEl.classList.add("hide");
+    // feedbackEl.classList.add("hide");
+    imgEl.classList.add("hide");
     continueBtn.classList.add("hide");
     if (currentQuestionIndex === questions.length) {
         submitHighscores ();
