@@ -5,7 +5,6 @@ var highscoresBtn = document.querySelector("#highscores");
 var openingPg = document.querySelector("#opening-page");
 var questionsPg = document.querySelector("#questions-page");
 var imgEl = document.querySelector("#img");
-var feedbackEl = document.querySelector("#feedback");
 var submitHighscoresPg = document.querySelector("#submit-highscores-page");
 var viewHighscoresPg = document.querySelector("#view-highscores-page");
 var questionEl = document.querySelector("#question");
@@ -47,7 +46,6 @@ function clear () {
 
 function resetApp () {
     // location.reload();
-    alert("Reset");
     viewHighscoresPg.classList.add("hide");
     openingPg.classList.remove("hide");
     currentQuestionIndex = 0;
