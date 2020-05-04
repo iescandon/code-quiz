@@ -131,8 +131,6 @@ function submitHighscores () {
 }
 
 function analyzeAnswer () {
-    var choice = this;
-    choice.setAttribute("style", "background-color: lightblue");
     var choiceBtns = document.querySelectorAll(".choice");
     for (var i = 0; i < choiceBtns.length; i++) {
         choiceBtns[i].disabled = true;
@@ -140,6 +138,8 @@ function analyzeAnswer () {
     }
     if (this.value === questions[currentQuestionIndex].answer) {
         score++;
+        var choice = this;
+        choice.style.backgroundColor = "#3bb300";
         imgEl.setAttribute('src', 'assets/images/correct.png');
         imgEl.setAttribute('style', 'width:200px');
         imgEl.classList.remove("hide");
@@ -150,6 +150,8 @@ function analyzeAnswer () {
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
+        var choice = this;
+        choice.style.backgroundColor = "red";
         imgEl.setAttribute('src', 'assets/images/incorrect.png');
         imgEl.setAttribute('style', 'width:200px;');
         imgEl.classList.remove("hide");
@@ -163,7 +165,6 @@ function analyzeAnswer () {
 }
 
 function getQuestions () {
-    // feedbackEl.classList.add("hide");
     imgEl.classList.add("hide");
     continueBtn.classList.add("hide");
     if (currentQuestionIndex === questions.length) {
