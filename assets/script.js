@@ -64,7 +64,7 @@ function viewHighscores () {
     if (storedScores !== null) {
         for (var i = 0; i < storedScores.length; i++) {
         var li = document.createElement("li");
-        li.textContent = `initials: ${storedScores[i].initials} score: ${storedScores[i].value}`;
+        li.textContent = storedScores[i].initials + " - " + storedScores[i].value;
         initialsEl.prepend(li);
         }
     }
