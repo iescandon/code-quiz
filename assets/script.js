@@ -98,8 +98,9 @@ function analyzeAnswer () {
         score++;
         var choice = this;
         choice.style.backgroundColor = "#3bb300";
-        imgEl.setAttribute('src', 'assets/images/correct.png');
-        imgEl.setAttribute('style', 'width:200px');
+        imgEl.setAttribute("src", "assets/images/correct.png");
+        imgEl.setAttribute("alt", "Correct!")
+        imgEl.setAttribute("style", "width:200px");
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
     } else {
@@ -107,8 +108,9 @@ function analyzeAnswer () {
         timerEl.textContent = "Time: " + time;
         var choice = this;
         choice.style.backgroundColor = "#ff1a1a";
-        imgEl.setAttribute('src', 'assets/images/incorrect.png');
-        imgEl.setAttribute('style', 'width:200px;');
+        imgEl.setAttribute("src", "assets/images/incorrect.png");
+        imgEl.setAttribute("alt", "Incorrect!")
+        imgEl.setAttribute("style", "width:200px;");
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
         for (var i = 0; i < choiceBtns.length; i++) {
