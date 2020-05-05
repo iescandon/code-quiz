@@ -20,7 +20,7 @@ var currentQuestionIndex = 0;
 var score = 0;
 var time = (questions.length * 10) + 1;
 var timerInterval = 0;
-var highScoresArray = [];
+
 
 //logic
 function startTimer() {
@@ -45,7 +45,6 @@ function clear () {
 }
 
 function resetApp () {
-    // location.reload();
     viewHighscoresPg.classList.add("hide");
     openingPg.classList.remove("hide");
     currentQuestionIndex = 0;
@@ -54,52 +53,39 @@ function resetApp () {
 }
 
 function viewHighscores () {
+    var storedScores = JSON.parse(localStorage.getItem("initialValues"));
+    clearInterval(timerInterval);
+    timerEl.textContent = "Time: 0";
     openingPg.classList.add("hide");
+    questionsPg.classList.add("hide");
     submitHighscoresPg.classList.add("hide");
     viewHighscoresPg.classList.remove("hide");
     initialsEl.innerHTML = "";
-    for (var i = 0; i < highScoresArray.length; i++) {
-        var initialInput = highScoresArray[i];
+    if (storedScores !== null) {
+        for (var i = 0; i < storedScores.length; i++) {
         var li = document.createElement("li");
-        li.textContent = initialInput;
-        li.setAttribute("data-index", i);
+        li.textContent = `initials: ${storedScores[i].initials} score: ${storedScores[i].value}`;
         initialsEl.prepend(li);
+        }
     }
     goBackBtn.addEventListener("click", resetApp);
     clearBtn.addEventListener("click", clear);
 }
 
-function init () {
-    var storedScores = JSON.parse(localStorage.getItem("initials"));
-    if (storedScores !== null) {
-        highScoresArray = storedScores
-    }
-    viewHighscores();
-}
-
-function storeHighscores () {
-    localStorage.setItem("initials", JSON.stringify(highScoresArray));
-    init();
-}
-
 function submitHighscores () {
-    questionsPg.classList.add("hide");
-    submitHighscoresPg.classList.remove("hide");
-    clearInterval(timerInterval);
-    timerEl.textContent = "Time: 0";
-    score = (score * 10) + "%";
-    finalscoreEl.textContent = score;
-    submitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        if (initials === "") {
-            alert("Initials cannot be blank");
-            return;
-        }
-        var initials = userInitials.value.trim();
-        highScoresArray.push(initials);
-        userInitials.value = "";
-        storeHighscores();
-    })
+    var highScoresArray = [];
+    var initialValues = localStorage.getItem("initialValues")
+    if (initialValues !== null) {
+        highScoresArray = JSON.parse(initialValues);
+    }
+    let userInfo = {
+    initials: userInitials.value.trim(),
+    value: score
+    }
+    highScoresArray.push(userInfo);
+    userInitials.value = "";
+    localStorage.setItem("initialValues", JSON.stringify(highScoresArray));
+    viewHighscores();
 }
 
 function analyzeAnswer () {
@@ -116,24 +102,20 @@ function analyzeAnswer () {
         imgEl.setAttribute('style', 'width:200px');
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        // setTimeout(function() {
-        //     feedbackEl.classList.add("hide");
-        // },1000)
     } else {
         time = time - 5;
         timerEl.textContent = "Time: " + time;
         var choice = this;
         choice.style.backgroundColor = "#ff1a1a";
-        // var correctAnswer = questions[currentQuestionIndex].answer;
-        // console.log(correctAnswer);
-        // correctAnswer.style.backgroundColor = "#3bb300";
         imgEl.setAttribute('src', 'assets/images/incorrect.png');
         imgEl.setAttribute('style', 'width:200px;');
         imgEl.classList.remove("hide");
         continueBtn.classList.remove("hide");
-        // setTimeout(function() {
-        //     feedbackEl.classList.add("hide");
-        // },1000)
+        for (var i = 0; i < choiceBtns.length; i++) {
+            if (choiceBtns[i].value === questions[currentQuestionIndex].answer) {
+                choiceBtns[i].style.backgroundColor = "#3bb300";
+            }
+        }
     }
     currentQuestionIndex++;
     continueBtn.addEventListener("click", getQuestions);
@@ -143,7 +125,12 @@ function getQuestions () {
     imgEl.classList.add("hide");
     continueBtn.classList.add("hide");
     if (currentQuestionIndex === questions.length) {
-        submitHighscores ();
+        questionsPg.classList.add("hide");
+        submitHighscoresPg.classList.remove("hide");
+        clearInterval(timerInterval);
+        timerEl.textContent = "Time: 0";
+        score = (score * 10) + "%";
+        finalscoreEl.textContent = score;
     } else {
         var currentQuestion = questions[currentQuestionIndex];
         questionEl.textContent = currentQuestion.title;
@@ -169,3 +156,11 @@ function startQuestions () {
 //launch functions and event listeners
 startBtn.addEventListener("click", startQuestions);
 highscoresBtn.addEventListener("click", viewHighscores);
+submitBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (userInitials.value === "") {
+        alert("Initials cannot be blank");
+        return;
+    }
+    submitHighscores ()
+})
